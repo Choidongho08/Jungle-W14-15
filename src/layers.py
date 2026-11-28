@@ -50,11 +50,9 @@ class Affine:
         """
         # TODO 1: backward에서 다시 써야 하므로 입력 x를 self.x에 저장하세요.
         self.x = x
-
         # TODO 2: x @ W + b 를 계산해 반환하세요. b는 broadcasting으로 모든 행에 더해집니다.
-        y = x @ self.W + self.b
-
-        return y
+        out = np.dot(x, self.W) + self.b
+        return out
 
     def backward(self, dout):
         """
