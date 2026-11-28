@@ -221,3 +221,6 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# MNIST 데이터 (download_mnist.py로 생성, 커밋하지 않음)
+data/mnist.npz
