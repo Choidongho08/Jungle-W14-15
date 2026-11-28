@@ -57,8 +57,8 @@ class SoftmaxWithLoss:
         self.y_prob = np.exp(stable_logits) / np.sum(np.exp(stable_logits), axis=1, keepdims=True)
         self.y_true = y_true.copy()
         # 4)
-        B = logits.shape[0]
-        loss = np.sum(-np.log(np.clip(self.y_prob[np.arange(B), y_true], 1e-7, 1.0))) / B
+        batch_size = logits.shape[0]
+        loss = np.sum(-np.log(np.clip(self.y_prob[np.arange(batch_size), y_true], 1e-7, 1.0))) / batch_size
 
         return loss
         
@@ -80,4 +80,9 @@ class SoftmaxWithLoss:
         검증: dx의 전체 합은 0에 가까워야 합니다. 왜 그런지 설명할 수 있어야 합니다.
         """
         # TODO: 위 1~3 순서대로 구현하세요.
-        raise NotImplementedError("SoftmaxWithLoss.backward를 구현하세요.")
+        dlogits = self.y_prob.copy()
+        batch_size = self.y_prob.shape[0]
+        dlogits[np.arange(batch_size), self.y_true] -= 1
+        dx = dlogits / batch_size
+        return dx
+        
